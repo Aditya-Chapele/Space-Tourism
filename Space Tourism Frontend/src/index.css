@@ -1,0 +1,381 @@
+@import url('https://fonts.googleapis.com/css2?family=Bellefair&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+::selection{
+    background-color: var(--clr-neutral-900);
+    color: var(--clr-neutral-100);
+}
+
+/* Box sizing rules */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* Remove default margin */
+body,
+h1,
+h2,
+h3,
+h4,
+p,
+figure,
+blockquote,
+dl,
+dd {
+    margin-block: 0;
+}
+
+/* Remove list styles on ul, ol elements with a list role, which suggests default styling will be removed */
+ul[role='list'],
+ol[role='list'] {
+    list-style: none;
+}
+
+/* Set core root defaults */
+html:focus-within {
+    scroll-behavior: smooth;
+}
+
+/* Set core body defaults */
+body {
+    min-height: 100vh;
+    text-rendering: optimizeSpeed;
+    line-height: 1.5;
+    font-family: Bellefair,system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    background-color: hsl(240, 100%, 5%);
+    color: white;
+}
+
+/* A elements that don't have a class get default styles */
+a:not([class]) {
+    text-decoration-skip-ink: auto;
+}
+
+/* Make images easier to work with */
+img,
+picture {
+    max-width: 100%;
+    display: block;
+}
+
+/* Inherit fonts for inputs and buttons */
+input,
+button,
+textarea,
+select {
+    font: inherit;
+}
+
+/* Remove all animations, transitions and smooth scroll for people that prefer not to see them */
+@media (prefers-reduced-motion: reduce) {
+    html:focus-within {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+
+.content-grid {
+  --padding-inline: 1rem;
+  --content-max-width: 1400px;
+  --breakout-max-width: 1920px;
+
+  --breakout-size: calc(
+    calc(var(--breakout-max-width) - var(--content-max-width)) / 2
+  );
+
+  display: grid;
+  grid-template-columns:
+    [full-width-start] minmax(var(--padding-inline), 1fr)
+    [breakout-start] minmax(0, var(--breakout-size))
+    [content-start] min(
+      100% - calc(var(--padding-inline) * 2),
+      var(--content-max-width)
+    )
+    [content-end]
+    minmax(0, var(--breakout-size)) [breakout-end]
+    minmax(var(--padding-inline), 1fr) [full-width-end];
+}
+
+.content-grid > :not(.breakout, .full-width),
+.full-width > :not(.breakout, .full-width) {
+  grid-column: content;
+}
+
+.content-grid > .breakout {
+  grid-column: breakout;
+}
+
+.content-grid > .full-width {
+  grid-column: full-width;
+
+  display: grid;
+  grid-template-columns: inherit;
+}
+
+img.full-width {
+  width: 100%;
+  max-height: 45vh;
+  object-fit: cover;
+}
+
+
+
+nav {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin-top: 2rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+nav>.nleft>img{
+  color: white;
+}
+
+ul>il>a {
+  text-transform: capitalize;
+  text-decoration: none;
+  font-size: 1.2rem;
+  color: white;
+}
+
+ul>il>a:hover {
+  text-decoration: 3px underline rgba(255, 255, 255, 0.6);
+  text-underline-offset: 1.3rem;
+}
+
+.nav-links {
+  display: flex;
+  list-style: none;
+  padding: 1rem 10rem 1rem 3rem;
+  gap: 2rem;
+  justify-content: flex-end;
+  align-items: center;
+  text-transform: uppercase;
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+
+
+/*Styling Hamburger Icon*/
+.hamburger div {
+  width: 40px;
+  height: 3px;
+  background: white;
+  border-radius: 100vw;
+  margin: 6px;
+  transition: all 0.3s ease;
+}
+
+.hamburger {
+  display: none;
+}
+
+/*Stying for small screens*/
+@media screen and (max-width: 768px) {
+
+  .hamburger {
+      display: block;
+      position: relative;
+      cursor: pointer;
+      z-index: 100;
+      margin-right: 1rem;
+      transition: all 0.7s ease;
+  }
+
+  .nav-links {
+      position: fixed;
+      top: -5%;
+      right: 0%;
+      z-index: 99;
+
+
+      height: 110vh;
+      width: 70%;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      padding: 0;
+      padding-left: 3rem;
+      padding-top: 15vh;
+      
+
+
+      transform: translateX(100%);
+      transition: all 1s ease-out;
+      pointer-events: none;
+  }
+
+  ul>il{
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+  }
+
+  ul>il>a:hover {
+    text-decoration: 0px underline white;
+  }
+
+  .link-active{
+    text-decoration: 0px underline white;
+  }
+  .link-active:hover{
+    text-decoration: 0px underline white;
+  }
+
+  
+      
+}
+.open {
+  
+  transform: translateX(0%);
+  pointer-events: all;
+}
+
+@media screen and (max-width: 300px){
+ .nav-links{
+  width: 100%;
+ }
+}
+
+/*Animating Hamburger Icon on Click*/
+
+.toggle .line1 {
+  transform: rotate(-45deg) translate(-6px, 6px);
+}
+
+.toggle .line2 {
+  transition: all 0.7s ease;
+  width: 0;
+}
+
+.toggle .line3 {
+  transform: rotate(45deg) translate(-6px, -6px);
+}
+
+.explore{
+  width: max(50%,14rem);
+}
+
+
+/* active-link  */
+
+
+.link-active{
+  text-decoration: 3px underline white;
+  text-underline-offset: 1.3rem;
+}
+.link-active:hover{
+  text-decoration: 3px underline white;
+  text-underline-offset: 1.3rem;
+}
+
+.active-destination{
+  border-bottom: 3px solid white;
+}
+.active-destination:hover{
+  border-bottom: 3px solid white;
+}
+
+.active-crew{
+  background-color: white;
+}
+
+.active-crew.active-crew:hover{
+  background-color: white;
+}
+
+
+.active-technology{
+  width: 4rem;
+  aspect-ratio: 1;
+  font-size: 1.2rem;
+  border: 2px solid rgba(255, 255, 255, 0.6);
+  background-color: white;
+  border-radius: 50%;
+  color: black;
+}
+.active-technology:hover{
+  border: 2px solid white;
+  background-color: white;
+  color: black;
+}
+
+/* background images */
+
+
+.home{
+  background-image: url(/public/assets/home/background-home-desktop.jpg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.destination{
+  background-image: url(/public/assets/destination/background-destination-desktop.jpg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.crew{
+  background-image: url(/public/assets/crew/background-crew-desktop.jpg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.technology{
+  background-image: url(/public/assets/technology/background-technology-desktop.jpg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+@media screen and (max-width: 768px) and (min-width:400px){
+  .home{
+    background-image: url(/public/assets/home/background-home-tablet.jpg);
+  }
+  .destination{
+    background-image: url(/public/assets/destination/background-destination-tablet.jpg);
+  }
+  .crew{
+    background-image: url(/public/assets/crew/background-crew-tablet.jpg);
+  }
+  .technology{
+    background-image: url(/public/assets/technology/background-technology-tablet.jpg);
+  }
+} 
+
+@media screen and (max-width: 400px){
+  .home{
+    background-image: url(/public/assets/home/background-home-mobile.jpg);
+  }
+  .destination{
+    background-image: url(/public/assets/destination/background-destination-mobile.jpg);
+  }
+  .crew{
+    background-image: url(/public/assets/crew/background-crew-mobile.jpg);
+  }
+  .technology{
+    background-image: url(/public/assets/technology/background-technology-mobile.jpg);
+  }
+} 
